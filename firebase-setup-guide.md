@@ -38,3 +38,14 @@ The FIREBASE_PRIVATE_KEY you provided appears to be a web API key (`AIzaSyB_...`
 2. Click "Create database"
 3. Choose "Start in test mode" for now
 4. Select a location close to your users
+
+## IMPORTANT: Enable Firestore API
+
+The error shows that the Cloud Firestore API needs to be enabled for your project. Please:
+
+1. Visit this link: https://console.developers.google.com/apis/api/firestore.googleapis.com/overview?project=rentless-38f72
+2. Click "Enable" to enable the Cloud Firestore API
+3. Wait a few minutes for the changes to propagate
+4. Try accessing your application again
+
+This is a one-time setup step required for new Firebase projects.

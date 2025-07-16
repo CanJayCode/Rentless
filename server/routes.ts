@@ -11,7 +11,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const rooms = await storage.getRooms();
       res.json(rooms);
     } catch (error) {
-      res.status(500).json({ message: "Failed to fetch rooms" });
+      console.error("Error fetching rooms:", error);
+      res.status(500).json({ message: "Failed to fetch rooms", error: error instanceof Error ? error.message : String(error) });
     }
   });
 

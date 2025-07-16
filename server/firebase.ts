@@ -41,13 +41,15 @@ const initializeFirebase = () => {
   }
 };
 
-// Initialize Firebase (with error handling)
-if (process.env.USE_FIRESTORE === 'true') {
-  initializeFirebase();
-}
-
-// Export Firestore instance (only if initialized)
-export const db = getApps().length > 0 ? getFirestore() : null;
+// Export a function to get initialized Firestore instance
+export const getDb = () => {
+  if (getApps().length === 0) {
+    if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_PRIVATE_KEY && process.env.FIREBASE_CLIENT_EMAIL) {
+      initializeFirebase();
+    }
+  }
+  return getApps().length > 0 ? getFirestore() : null;
+};
 
 // Collection names
 export const COLLECTIONS = {

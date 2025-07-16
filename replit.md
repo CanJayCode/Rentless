@@ -137,3 +137,11 @@ Preferred communication style: Simple, everyday language.
   - Fixed navigation component to eliminate nested anchor warnings
   - Balances from previous month automatically added to current month's due amount
   - Visual indicators show which month unpaid amounts are carried forward from
+
+- **2025-01-16**: Integrated Firebase Firestore for persistent data storage
+  - Added Firebase Admin SDK with proper service account authentication
+  - Created FirestoreStorage class implementing IStorage interface
+  - Automatic fallback to in-memory storage when Firebase credentials unavailable
+  - Lazy initialization of Firebase to avoid startup issues
+  - Maintains all existing functionality including carry-forward logic
+  - Requires Firestore API to be enabled in Google Cloud Console

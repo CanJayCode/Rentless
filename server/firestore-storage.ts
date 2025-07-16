@@ -1,14 +1,18 @@
-import { db, COLLECTIONS } from './firebase';
+import { getDb, COLLECTIONS } from './firebase';
 import { IStorage } from './storage';
 import { Room, InsertRoom, Settings, InsertSettings, UpdateRoom } from '../shared/schema';
 
 export class FirestoreStorage implements IStorage {
-  private checkFirestore() {
+  private getFirestore() {
+    const db = getDb();
     if (!db) {
       throw new Error('Firestore is not initialized. Please check your Firebase credentials.');
     }
+    return db;
   }
   private async initializeDefaultData() {
+    const db = this.getFirestore();
+    
     // Check if settings exist
     const settingsDoc = await db.collection(COLLECTIONS.SETTINGS).doc('default').get();
     
@@ -43,6 +47,7 @@ export class FirestoreStorage implements IStorage {
   }
 
   async getRooms(): Promise<Room[]> {
+    const db = this.getFirestore();
     await this.initializeDefaultData();
     
     const snapshot = await db.collection(COLLECTIONS.ROOMS).orderBy('id').get();
@@ -62,6 +67,7 @@ export class FirestoreStorage implements IStorage {
   }
 
   async getRoom(id: number): Promise<Room | undefined> {
+    const db = this.getFirestore();
     const doc = await db.collection(COLLECTIONS.ROOMS).doc(id.toString()).get();
     
     if (!doc.exists) {
@@ -157,6 +163,7 @@ export class FirestoreStorage implements IStorage {
   }
 
   async createRoom(insertRoom: InsertRoom): Promise<Room> {
+    const db = this.getFirestore();
     // Get the next available ID
     const snapshot = await db.collection(COLLECTIONS.ROOMS).get();
     const maxId = snapshot.docs.reduce((max, doc) => {
@@ -176,6 +183,7 @@ export class FirestoreStorage implements IStorage {
   }
 
   async updateRoom(id: number, data: Partial<Room>): Promise<Room | undefined> {
+    const db = this.getFirestore();
     const roomRef = db.collection(COLLECTIONS.ROOMS).doc(id.toString());
     const doc = await roomRef.get();
     
@@ -197,6 +205,7 @@ export class FirestoreStorage implements IStorage {
   }
 
   async updateRoomForMonth(roomId: number, month: string, data: UpdateRoom): Promise<Room | undefined> {
+    const db = this.getFirestore();
     const room = await this.getRoom(roomId);
     if (!room) return undefined;
 
@@ -236,6 +245,7 @@ export class FirestoreStorage implements IStorage {
   }
 
   async getSettings(): Promise<Settings> {
+    const db = this.getFirestore();
     await this.initializeDefaultData();
     
     const doc = await db.collection(COLLECTIONS.SETTINGS).doc('default').get();
@@ -253,6 +263,7 @@ export class FirestoreStorage implements IStorage {
   }
 
   async updateSettings(newSettings: Partial<InsertSettings>): Promise<Settings> {
+    const db = this.getFirestore();
     const currentSettings = await this.getSettings();
     const updatedSettings = {
       ...currentSettings,
@@ -264,6 +275,7 @@ export class FirestoreStorage implements IStorage {
   }
 
   async resetMonthData(month: string): Promise<void> {
+    const db = this.getFirestore();
     const rooms = await this.getRooms();
     const batch = db.batch();
     
@@ -280,6 +292,7 @@ export class FirestoreStorage implements IStorage {
   }
 
   async resetAllData(): Promise<void> {
+    const db = this.getFirestore();
     const batch = db.batch();
     
     // Reset all rooms to default state
