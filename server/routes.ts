@@ -1,6 +1,6 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { storageManager } from "./storage-manager";
 import { updateRoomSchema, insertSettingsSchema } from "@shared/schema";
 import { z } from "zod";
 
@@ -8,6 +8,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get all rooms
   app.get("/api/rooms", async (req, res) => {
     try {
+      const storage = await storageManager.getStorage();
       const rooms = await storage.getRooms();
       res.json(rooms);
     } catch (error) {
@@ -19,6 +20,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get room by ID
   app.get("/api/rooms/:id", async (req, res) => {
     try {
+      const storage = await storageManager.getStorage();
       const id = parseInt(req.params.id);
       const room = await storage.getRoom(id);
       if (!room) {
@@ -33,6 +35,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get room by ID for specific month (with carry-forward logic)
   app.get("/api/rooms/:id/month/:month", async (req, res) => {
     try {
+      const storage = await storageManager.getStorage();
       const id = parseInt(req.params.id);
       const month = req.params.month;
       const room = await storage.getRoomForMonth(id, month);
@@ -48,6 +51,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Update room for specific month
   app.post("/api/rooms/:id/month/:month", async (req, res) => {
     try {
+      const storage = await storageManager.getStorage();
       const id = parseInt(req.params.id);
       const month = req.params.month;
       const data = updateRoomSchema.parse(req.body);
@@ -69,6 +73,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get settings
   app.get("/api/settings", async (req, res) => {
     try {
+      const storage = await storageManager.getStorage();
       const settings = await storage.getSettings();
       res.json(settings);
     } catch (error) {
@@ -79,6 +84,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Update settings
   app.post("/api/settings", async (req, res) => {
     try {
+      const storage = await storageManager.getStorage();
       const data = insertSettingsSchema.parse(req.body);
       const settings = await storage.updateSettings(data);
       res.json(settings);
@@ -93,6 +99,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Reset month data
   app.post("/api/data/reset-month", async (req, res) => {
     try {
+      const storage = await storageManager.getStorage();
       const { month } = req.body;
       if (!month) {
         return res.status(400).json({ message: "Month is required" });
@@ -108,6 +115,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Reset all data
   app.post("/api/data/reset-all", async (req, res) => {
     try {
+      const storage = await storageManager.getStorage();
       await storage.resetAllData();
       res.json({ message: "All data reset successfully" });
     } catch (error) {
@@ -118,6 +126,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Export data as CSV
   app.get("/api/export/csv/:month", async (req, res) => {
     try {
+      const storage = await storageManager.getStorage();
       const month = req.params.month;
       const rooms = await storage.getRooms();
       

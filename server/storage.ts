@@ -254,7 +254,22 @@ export class MemStorage implements IStorage {
 
 import { FirestoreStorage } from './firestore-storage';
 
-// Use Firestore storage when Firebase credentials are available
-export const storage = process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_PRIVATE_KEY && process.env.FIREBASE_CLIENT_EMAIL
-  ? new FirestoreStorage() 
-  : new MemStorage();
+// Function to create storage instance with error handling
+function createStorage(): IStorage {
+  // Check if Firebase credentials are available
+  if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_PRIVATE_KEY && process.env.FIREBASE_CLIENT_EMAIL) {
+    try {
+      console.log('Firebase credentials found, attempting to use Firestore storage...');
+      return new FirestoreStorage();
+    } catch (error) {
+      console.error('Failed to initialize Firestore storage:', error);
+      console.log('Falling back to in-memory storage');
+      return new MemStorage();
+    }
+  } else {
+    console.log('Firebase credentials not found, using in-memory storage');
+    return new MemStorage();
+  }
+}
+
+export const storage = createStorage();

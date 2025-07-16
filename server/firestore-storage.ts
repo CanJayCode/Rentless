@@ -13,8 +13,9 @@ export class FirestoreStorage implements IStorage {
   private async initializeDefaultData() {
     const db = this.getFirestore();
     
-    // Check if settings exist
-    const settingsDoc = await db.collection(COLLECTIONS.SETTINGS).doc('default').get();
+    try {
+      // Check if settings exist
+      const settingsDoc = await db.collection(COLLECTIONS.SETTINGS).doc('default').get();
     
     if (!settingsDoc.exists) {
       // Create default settings
@@ -44,13 +45,18 @@ export class FirestoreStorage implements IStorage {
       
       await batch.commit();
     }
+    } catch (error) {
+      console.error('Error initializing Firestore data:', error);
+      throw new Error('Firestore database is not available. Please create the database first.');
+    }
   }
 
   async getRooms(): Promise<Room[]> {
-    const db = this.getFirestore();
-    await this.initializeDefaultData();
-    
-    const snapshot = await db.collection(COLLECTIONS.ROOMS).orderBy('id').get();
+    try {
+      const db = this.getFirestore();
+      await this.initializeDefaultData();
+      
+      const snapshot = await db.collection(COLLECTIONS.ROOMS).orderBy('id').get();
     const rooms: Room[] = [];
     
     snapshot.forEach(doc => {
@@ -64,6 +70,10 @@ export class FirestoreStorage implements IStorage {
     });
     
     return rooms;
+    } catch (error) {
+      console.error('Error fetching rooms from Firestore:', error);
+      throw error;
+    }
   }
 
   async getRoom(id: number): Promise<Room | undefined> {
