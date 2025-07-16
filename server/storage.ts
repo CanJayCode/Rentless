@@ -252,4 +252,9 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+import { FirestoreStorage } from './firestore-storage';
+
+// Use Firestore storage only when explicitly enabled (to avoid credential issues during setup)
+export const storage = process.env.USE_FIRESTORE === 'true' && process.env.FIREBASE_PROJECT_ID 
+  ? new FirestoreStorage() 
+  : new MemStorage();
