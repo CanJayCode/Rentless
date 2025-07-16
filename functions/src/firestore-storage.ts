@@ -139,7 +139,7 @@ export class FirestoreStorage implements IStorage {
     const updatedRoom: Room = {
       ...room,
       monthlyData: {
-        ...room.monthlyData,
+        ...(room.monthlyData as any),
         [month]: {
           ...currentMonthData,
           rent: {
@@ -245,7 +245,7 @@ export class FirestoreStorage implements IStorage {
       ...room,
       tenantName: data.tenantName,
       monthlyData: {
-        ...room.monthlyData,
+        ...(room.monthlyData as any),
         [month]: updatedMonthData,
       },
     };

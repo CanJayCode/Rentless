@@ -10,11 +10,11 @@ async function registerRoutes(app) {
         try {
             const storage = await storage_manager_1.storageManager.getStorage();
             const rooms = await storage.getRooms();
-            res.json(rooms);
+            return res.json(rooms);
         }
         catch (error) {
             console.error("Error fetching rooms:", error);
-            res.status(500).json({ message: "Failed to fetch rooms", error: error instanceof Error ? error.message : String(error) });
+            return res.status(500).json({ message: "Failed to fetch rooms", error: error instanceof Error ? error.message : String(error) });
         }
     });
     // Get room by ID
@@ -26,10 +26,10 @@ async function registerRoutes(app) {
             if (!room) {
                 return res.status(404).json({ message: "Room not found" });
             }
-            res.json(room);
+            return res.json(room);
         }
         catch (error) {
-            res.status(500).json({ message: "Failed to fetch room" });
+            return res.status(500).json({ message: "Failed to fetch room" });
         }
     });
     // Get room by ID for specific month (with carry-forward logic)
@@ -42,10 +42,10 @@ async function registerRoutes(app) {
             if (!room) {
                 return res.status(404).json({ message: "Room not found" });
             }
-            res.json(room);
+            return res.json(room);
         }
         catch (error) {
-            res.status(500).json({ message: "Failed to fetch room" });
+            return res.status(500).json({ message: "Failed to fetch room" });
         }
     });
     // Update room for specific month
@@ -59,13 +59,13 @@ async function registerRoutes(app) {
             if (!room) {
                 return res.status(404).json({ message: "Room not found" });
             }
-            res.json(room);
+            return res.json(room);
         }
         catch (error) {
             if (error instanceof zod_1.z.ZodError) {
                 return res.status(400).json({ message: "Invalid data", errors: error.errors });
             }
-            res.status(500).json({ message: "Failed to update room" });
+            return res.status(500).json({ message: "Failed to update room" });
         }
     });
     // Get settings
@@ -73,10 +73,10 @@ async function registerRoutes(app) {
         try {
             const storage = await storage_manager_1.storageManager.getStorage();
             const settings = await storage.getSettings();
-            res.json(settings);
+            return res.json(settings);
         }
         catch (error) {
-            res.status(500).json({ message: "Failed to fetch settings" });
+            return res.status(500).json({ message: "Failed to fetch settings" });
         }
     });
     // Update settings
@@ -85,13 +85,13 @@ async function registerRoutes(app) {
             const storage = await storage_manager_1.storageManager.getStorage();
             const data = schema_1.insertSettingsSchema.parse(req.body);
             const settings = await storage.updateSettings(data);
-            res.json(settings);
+            return res.json(settings);
         }
         catch (error) {
             if (error instanceof zod_1.z.ZodError) {
                 return res.status(400).json({ message: "Invalid data", errors: error.errors });
             }
-            res.status(500).json({ message: "Failed to update settings" });
+            return res.status(500).json({ message: "Failed to update settings" });
         }
     });
     // Reset month data
@@ -103,10 +103,10 @@ async function registerRoutes(app) {
                 return res.status(400).json({ message: "Month is required" });
             }
             await storage.resetMonthData(month);
-            res.json({ message: "Month data reset successfully" });
+            return res.json({ message: "Month data reset successfully" });
         }
         catch (error) {
-            res.status(500).json({ message: "Failed to reset month data" });
+            return res.status(500).json({ message: "Failed to reset month data" });
         }
     });
     // Reset all data
@@ -114,10 +114,10 @@ async function registerRoutes(app) {
         try {
             const storage = await storage_manager_1.storageManager.getStorage();
             await storage.resetAllData();
-            res.json({ message: "All data reset successfully" });
+            return res.json({ message: "All data reset successfully" });
         }
         catch (error) {
-            res.status(500).json({ message: "Failed to reset all data" });
+            return res.status(500).json({ message: "Failed to reset all data" });
         }
     });
     // Export data as CSV
@@ -127,14 +127,14 @@ async function registerRoutes(app) {
             const month = req.params.month;
             const rooms = await storage.getRooms();
             const csvHeaders = [
-                "Room",
-                "Tenant",
+                "Room Number",
+                "Tenant Name",
                 "Rent Status",
-                "Rent Amount",
+                "Rent Due",
                 "Rent Paid",
                 "Rent Balance",
-                "Units Consumed",
-                "Electricity Amount",
+                "Electricity Units",
+                "Electricity Due",
                 "Electricity Paid",
                 "Electricity Balance",
                 "Electricity Status",
@@ -165,10 +165,10 @@ async function registerRoutes(app) {
                 .join("\n");
             res.setHeader("Content-Type", "text/csv");
             res.setHeader("Content-Disposition", `attachment; filename="rooms-${month}.csv"`);
-            res.send(csvContent);
+            return res.send(csvContent);
         }
         catch (error) {
-            res.status(500).json({ message: "Failed to export CSV" });
+            return res.status(500).json({ message: "Failed to export CSV" });
         }
     });
     // Routes configured for Firebase Functions

@@ -1,4 +1,4 @@
-import { rooms, settings, type Room, type InsertRoom, type Settings, type InsertSettings, type UpdateRoom } from "@shared/schema";
+import { type Room, type InsertRoom, type Settings, type InsertSettings, type UpdateRoom } from "../shared/schema";
 
 export interface IStorage {
   // Room operations
