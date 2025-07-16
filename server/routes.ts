@@ -29,6 +29,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get room by ID for specific month (with carry-forward logic)
+  app.get("/api/rooms/:id/month/:month", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const month = req.params.month;
+      const room = await storage.getRoomForMonth(id, month);
+      if (!room) {
+        return res.status(404).json({ message: "Room not found" });
+      }
+      res.json(room);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch room" });
+    }
+  });
+
   // Update room for specific month
   app.post("/api/rooms/:id/month/:month", async (req, res) => {
     try {

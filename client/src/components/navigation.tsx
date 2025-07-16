@@ -53,35 +53,29 @@ export default function Navigation({ selectedMonth, onMonthChange }: NavigationP
       <nav className="bg-white border-b border-slate-200">
         <div className="px-4">
           <div className="flex space-x-8">
-            <Link href="/">
-              <a className={`py-3 px-1 border-b-2 font-medium text-sm flex items-center ${
-                location === "/" 
-                  ? "border-blue-500 text-blue-600" 
-                  : "border-transparent text-slate-500 hover:text-slate-700"
-              }`}>
-                <LayoutDashboard className="mr-2 h-4 w-4" />
-                Dashboard
-              </a>
+            <Link href="/" className={`py-3 px-1 border-b-2 font-medium text-sm flex items-center ${
+              location === "/" 
+                ? "border-blue-500 text-blue-600" 
+                : "border-transparent text-slate-500 hover:text-slate-700"
+            }`}>
+              <LayoutDashboard className="mr-2 h-4 w-4" />
+              Dashboard
             </Link>
-            <Link href="/overview">
-              <a className={`py-3 px-1 border-b-2 font-medium text-sm flex items-center ${
-                location === "/overview" 
-                  ? "border-blue-500 text-blue-600" 
-                  : "border-transparent text-slate-500 hover:text-slate-700"
-              }`}>
-                <Calendar className="mr-2 h-4 w-4" />
-                Overview
-              </a>
+            <Link href="/overview" className={`py-3 px-1 border-b-2 font-medium text-sm flex items-center ${
+              location === "/overview" 
+                ? "border-blue-500 text-blue-600" 
+                : "border-transparent text-slate-500 hover:text-slate-700"
+            }`}>
+              <Calendar className="mr-2 h-4 w-4" />
+              Overview
             </Link>
-            <Link href="/settings">
-              <a className={`py-3 px-1 border-b-2 font-medium text-sm flex items-center ${
-                location === "/settings" 
-                  ? "border-blue-500 text-blue-600" 
-                  : "border-transparent text-slate-500 hover:text-slate-700"
-              }`}>
-                <Settings className="mr-2 h-4 w-4" />
-                Settings
-              </a>
+            <Link href="/settings" className={`py-3 px-1 border-b-2 font-medium text-sm flex items-center ${
+              location === "/settings" 
+                ? "border-blue-500 text-blue-600" 
+                : "border-transparent text-slate-500 hover:text-slate-700"
+            }`}>
+              <Settings className="mr-2 h-4 w-4" />
+              Settings
             </Link>
           </div>
         </div>

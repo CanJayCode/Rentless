@@ -4,13 +4,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { updateRoomSchema } from "@shared/schema";
-import { Home, Zap, Save } from "lucide-react";
+import { Home, Zap, Save, ArrowRight } from "lucide-react";
 import { useEffect } from "react";
 import type { Room, Settings, UpdateRoom } from "@shared/schema";
 
@@ -27,14 +28,24 @@ export default function RoomModal({ room, selectedMonth, onClose }: RoomModalPro
     queryKey: ["/api/settings"],
   });
 
-  const monthData = (room.monthlyData as any)?.[selectedMonth];
+  // Fetch room data with carry-forward logic
+  const { data: roomWithCarryForward } = useQuery<Room>({
+    queryKey: ["/api/rooms", room.id, "month", selectedMonth],
+    queryFn: async () => {
+      const response = await fetch(`/api/rooms/${room.id}/month/${selectedMonth}`);
+      return response.json();
+    },
+  });
+
+  const currentRoom = roomWithCarryForward || room;
+  const monthData = (currentRoom.monthlyData as any)?.[selectedMonth];
   const rent = monthData?.rent || {};
   const electricity = monthData?.electricity || {};
 
   const form = useForm<UpdateRoom>({
     resolver: zodResolver(updateRoomSchema),
     defaultValues: {
-      tenantName: room.tenantName,
+      tenantName: currentRoom.tenantName,
       rentPaid: rent.amountPaid || 0,
       rentDate: rent.date || "",
       rentNotes: rent.notes || "",
@@ -45,6 +56,27 @@ export default function RoomModal({ room, selectedMonth, onClose }: RoomModalPro
       electricityNotes: electricity.notes || "",
     },
   });
+
+  // Reset form when room data changes
+  useEffect(() => {
+    if (roomWithCarryForward) {
+      const monthData = (roomWithCarryForward.monthlyData as any)?.[selectedMonth];
+      const rent = monthData?.rent || {};
+      const electricity = monthData?.electricity || {};
+      
+      form.reset({
+        tenantName: roomWithCarryForward.tenantName,
+        rentPaid: rent.amountPaid || 0,
+        rentDate: rent.date || "",
+        rentNotes: rent.notes || "",
+        previousReading: electricity.previousReading || 0,
+        currentReading: electricity.currentReading || 0,
+        electricityPaid: electricity.amountPaid || 0,
+        electricityDate: electricity.date || "",
+        electricityNotes: electricity.notes || "",
+      });
+    }
+  }, [roomWithCarryForward, selectedMonth, form]);
 
   const updateRoomMutation = useMutation({
     mutationFn: async (data: UpdateRoom) => {
@@ -57,6 +89,7 @@ export default function RoomModal({ room, selectedMonth, onClose }: RoomModalPro
         description: "Room data has been saved successfully.",
       });
       queryClient.invalidateQueries({ queryKey: ["/api/rooms"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/rooms", room.id, "month", selectedMonth] });
       onClose();
     },
     onError: () => {
@@ -73,9 +106,11 @@ export default function RoomModal({ room, selectedMonth, onClose }: RoomModalPro
   const unitRate = settings?.unitRate || 10;
 
   const unitsConsumed = Math.max(0, watchedValues.currentReading - watchedValues.previousReading);
-  const electricityAmountDue = unitsConsumed * unitRate;
-  const rentBalance = baseRent - watchedValues.rentPaid;
-  const electricityBalance = electricityAmountDue - watchedValues.electricityPaid;
+  const electricityCurrentDue = unitsConsumed * unitRate;
+  const electricityTotalDue = electricityCurrentDue + (electricity.carryForward || 0);
+  const rentTotalDue = baseRent + (rent.carryForward || 0);
+  const rentBalance = rentTotalDue - watchedValues.rentPaid;
+  const electricityBalance = electricityTotalDue - watchedValues.electricityPaid;
 
   const onSubmit = (data: UpdateRoom) => {
     updateRoomMutation.mutate(data);
@@ -109,9 +144,25 @@ export default function RoomModal({ room, selectedMonth, onClose }: RoomModalPro
               Rent Details
             </h4>
             
+            {rent.carryForward > 0 && rent.carryForwardFrom && (
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-amber-800">Carry Forward</span>
+                  <Badge variant="outline" className="bg-amber-100 text-amber-800 border-amber-300">
+                    ₹{rent.carryForward} from {rent.carryForwardFrom}
+                  </Badge>
+                </div>
+              </div>
+            )}
+            
             <div className="flex items-center justify-between">
-              <span className="text-sm text-slate-600">Amount Due</span>
+              <span className="text-sm text-slate-600">Base Rent</span>
               <span className="font-medium text-slate-900">₹{baseRent}</span>
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-slate-600">Total Amount Due</span>
+              <span className="font-medium text-slate-900">₹{rent.amountDue || baseRent}</span>
             </div>
 
             <div className="space-y-2">
@@ -164,6 +215,17 @@ export default function RoomModal({ room, selectedMonth, onClose }: RoomModalPro
               Electricity Details
             </h4>
             
+            {electricity.carryForward > 0 && electricity.carryForwardFrom && (
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-amber-800">Carry Forward</span>
+                  <Badge variant="outline" className="bg-amber-100 text-amber-800 border-amber-300">
+                    ₹{electricity.carryForward} from {electricity.carryForwardFrom}
+                  </Badge>
+                </div>
+              </div>
+            )}
+            
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
                 <Label htmlFor="previousReading">Previous Reading</Label>
@@ -195,8 +257,13 @@ export default function RoomModal({ room, selectedMonth, onClose }: RoomModalPro
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="text-sm text-slate-600">Amount Due</span>
-              <span className="font-medium text-slate-900">₹{electricityAmountDue}</span>
+              <span className="text-sm text-slate-600">Current Usage</span>
+              <span className="font-medium text-slate-900">₹{electricityCurrentDue}</span>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-slate-600">Total Amount Due</span>
+              <span className="font-medium text-slate-900">₹{electricity.amountDue || electricityTotalDue}</span>
             </div>
 
             <div className="space-y-2">

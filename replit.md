@@ -126,3 +126,14 @@ Preferred communication style: Simple, everyday language.
 4. **Component Library**: ShadCN for consistent, accessible UI components
 5. **Type Safety**: End-to-end TypeScript with runtime validation via Zod
 6. **Query Optimization**: TanStack Query for efficient data fetching and caching
+7. **Carry-Forward Logic**: Automatic balance forwarding from previous month to current month
+
+### Recent Changes
+
+- **2025-01-16**: Implemented carry-forward logic for rent and electricity bills
+  - Added `carryForward` and `carryForwardFrom` fields to monthly data schema
+  - Created `getRoomForMonth` API endpoint for automatic carry-forward calculation
+  - Updated room modal to display carry-forward information with badges
+  - Fixed navigation component to eliminate nested anchor warnings
+  - Balances from previous month automatically added to current month's due amount
+  - Visual indicators show which month unpaid amounts are carried forward from
