@@ -1,0 +1,22 @@
+{
+  "name": "room-management-system",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "npm run build:frontend",
+    "build:frontend": "cd client && npm install && npm run build && mv dist ../dist"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.9.0",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.0.0",
+    "connect-pg-simple": "^9.0.1",
+    "drizzle-orm": "^0.33.0",
+    "drizzle-zod": "^0.5.1",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "firebase-admin": "^12.0.0",
+    "tsx": "^4.7.1",
+    "typescript": "^5.0.0",
+    "zod": "^3.22.0"
+  }
+}

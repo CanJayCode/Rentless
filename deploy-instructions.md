@@ -1,7 +1,9 @@
-# Firebase Hosting Deployment Instructions
+# Vercel Deployment Instructions
 
 ## Quick Deploy
-Just run: `./deploy.sh`
+1. Install Vercel CLI: `npm install -g vercel`
+2. Login: `vercel login`
+3. Deploy: `vercel --prod`
 
 ## Manual Steps
 
@@ -14,11 +16,34 @@ Just run: `./deploy.sh`
 # 1. Build the project
 npm run build
 
-# 2. Build functions
-cd functions && npm install && npm run build && cd ..
+# 2. Deploy to Vercel
+vercel --prod
+```
 
-# 3. Deploy
-firebase deploy
+### First Time Setup
+```bash
+# Install Vercel CLI
+npm install -g vercel
+
+# Login to Vercel
+vercel login
+
+# Deploy
+vercel --prod
+```
+
+### Environment Variables for Vercel
+
+You'll need to set these environment variables in your Vercel dashboard:
+
+1. Go to your Vercel project dashboard
+2. Navigate to Settings → Environment Variables
+3. Add these variables:
+
+```
+FIREBASE_PROJECT_ID=your-firebase-project-id
+FIREBASE_PRIVATE_KEY=your-firebase-private-key
+FIREBASE_CLIENT_EMAIL=your-firebase-client-email
 ```
 
 ### Troubleshooting Blank Page
@@ -26,21 +51,18 @@ firebase deploy
 If you see a blank page after deployment:
 
 1. **Check Browser Console**: Open developer tools and look for JavaScript errors
-2. **Check API Connection**: The frontend might not be connecting to Firebase Functions
-3. **Verify Firestore Rules**: Make sure your Firestore security rules allow read/write access
-4. **Check Functions Logs**: Run `firebase functions:log` to see backend errors
+2. **Check API Connection**: Verify the API endpoints are responding
+3. **Check Function Logs**: Go to Vercel dashboard → Functions tab to see server logs
+4. **Verify Environment Variables**: Make sure all Firebase credentials are set
 
-### Firestore Security Rules
-Make sure your Firestore rules allow access:
-```javascript
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if true; // Change this for production
-    }
-  }
-}
+### Quick Deploy Script
+
+Just run: `./deploy-vercel.sh`
+
+Or manually:
+```bash
+npm run build
+npx vercel --prod
 ```
 
 ## Project Structure
