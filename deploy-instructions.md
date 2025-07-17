@@ -1,43 +1,46 @@
 # Firebase Hosting Deployment Instructions
 
-## Prerequisites
+## Quick Deploy
+Just run: `./deploy.sh`
+
+## Manual Steps
+
+### Prerequisites
 1. Install Firebase CLI: `npm install -g firebase-tools`
 2. Login to Firebase: `firebase login`
 
-## Setup Steps
-
-### 1. Initialize Firebase Project
+### Deploy Steps
 ```bash
-firebase init
-```
-Select:
-- Hosting
-- Functions
-- Use existing project (select your Firebase project)
+# 1. Build the project
+npm run build
 
-### 2. Configure Firebase
-Update `.firebaserc` with your project ID:
-```json
-{
-  "projects": {
-    "default": "your-project-id"
+# 2. Build functions
+cd functions && npm install && npm run build && cd ..
+
+# 3. Deploy
+firebase deploy
+```
+
+### Troubleshooting Blank Page
+
+If you see a blank page after deployment:
+
+1. **Check Browser Console**: Open developer tools and look for JavaScript errors
+2. **Check API Connection**: The frontend might not be connecting to Firebase Functions
+3. **Verify Firestore Rules**: Make sure your Firestore security rules allow read/write access
+4. **Check Functions Logs**: Run `firebase functions:log` to see backend errors
+
+### Firestore Security Rules
+Make sure your Firestore rules allow access:
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if true; // Change this for production
+    }
   }
 }
-```
-
-### 3. Build and Deploy
-```bash
-# Build frontend
-npm run build
-
-# Build functions
-cd functions
-npm install
-npm run build
-cd ..
-
-# Deploy to Firebase
-firebase deploy
 ```
 
 ## Project Structure
