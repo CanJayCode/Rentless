@@ -1,0 +1,260 @@
+ll logs
+Search
+Search
+
+Live tail
+GMT+5:30
+
+Menu
+
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: undefined,
+  line: undefined,
+  routine: undefined,
+  sourceError: TypeError: fetch failed
+      at node:internal/deps/undici/undici:13510:13
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async execute (file:///opt/render/project/src/node_modules/@neondatabase/serverless/index.mjs:1548:15)
+      at async NeonHttpPreparedQuery.execute (file:///opt/render/project/src/node_modules/drizzle-orm/neon-http/session.js:40:20)
+      at async PostgresStorage.ensureInitialized (file:///opt/render/project/src/dist/index.js:613:34)
+      at async PostgresStorage.getSettings (file:///opt/render/project/src/dist/index.js:768:5)
+      at async StorageManager.getStorage (file:///opt/render/project/src/dist/index.js:819:7)
+      at async file:///opt/render/project/src/dist/index.js:1016:24 {
+    [cause]: Error: connect ECONNREFUSED 10.221.16.5:443
+        at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1636:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '10.221.16.5',
+      port: 443
+    }
+  }
+}
+postgres storage connection failed, falling back: NeonDbError: Error connecting to database: fetch failed
+    at execute (file:///opt/render/project/src/node_modules/@neondatabase/serverless/index.mjs:1549:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async NeonHttpPreparedQuery.execute (file:///opt/render/project/src/node_modules/drizzle-orm/neon-http/session.js:40:20)
+    at async PostgresStorage.ensureInitialized (file:///opt/render/project/src/dist/index.js:613:34)
+    at async PostgresStorage.getSettings (file:///opt/render/project/src/dist/index.js:768:5)
+    at async StorageManager.getStorage (file:///opt/render/project/src/dist/index.js:819:7)
+    at async file:///opt/render/project/src/dist/index.js:1016:24 {
+  severity: undefined,
+  code: undefined,
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: undefined,
+  line: undefined,
+  routine: undefined,
+  sourceError: TypeError: fetch failed
+      at node:internal/deps/undici/undici:13510:13
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async execute (file:///opt/render/project/src/node_modules/@neondatabase/serverless/index.mjs:1548:15)
+      at async NeonHttpPreparedQuery.execute (file:///opt/render/project/src/node_modules/drizzle-orm/neon-http/session.js:40:20)
+      at async PostgresStorage.ensureInitialized (file:///opt/render/project/src/dist/index.js:613:34)
+      at async PostgresStorage.getSettings (file:///opt/render/project/src/dist/index.js:768:5)
+      at async StorageManager.getStorage (file:///opt/render/project/src/dist/index.js:819:7)
+      at async file:///opt/render/project/src/dist/index.js:1016:24 {
+    [cause]: Error: connect ECONNREFUSED 10.221.16.5:443
+        at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1636:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '10.221.16.5',
+      port: 443
+Using in-memory storage as final fallback
+    }
+  }
+}
+5:30:59 PM [express] GET /api/status 200 in 223ms :: {"status":"healthy","timestamp":"2025-07-19T17:…
+5:30:59 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:30…
+5:31:04 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:31…
+5:31:09 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:31…
+5:31:09 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:31…
+5:31:14 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:31…
+5:31:19 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:31…
+5:31:24 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:31…
+5:31:29 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:31…
+5:31:34 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:31…
+5:31:39 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:31…
+5:31:39 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:31…
+     ==> Deploying...
+5:31:44 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:31…
+5:31:49 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:31…
+5:31:54 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:31…
+5:31:59 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:31…
+5:32:04 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+5:32:09 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+5:32:09 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+5:32:14 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+==> Running 'npm start'
+> rest-express@1.0.0 start
+> NODE_ENV=production node dist/index.js
+5:32:19 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+5:32:24 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+Firebase credentials not found, using in-memory storage
+DATABASE_URL found, using PostgreSQL storage
+5:32:28 PM [express] serving on port 10000
+5:32:29 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+Error initializing PostgreSQL storage: NeonDbError: Error connecting to database: fetch failed
+    at execute (file:///opt/render/project/src/node_modules/@neondatabase/serverless/index.mjs:1549:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async NeonHttpPreparedQuery.execute (file:///opt/render/project/src/node_modules/drizzle-orm/neon-http/session.js:40:20)
+    at async PostgresStorage.ensureInitialized (file:///opt/render/project/src/dist/index.js:613:34)
+    at async PostgresStorage.getSettings (file:///opt/render/project/src/dist/index.js:768:5)
+    at async StorageManager.getStorage (file:///opt/render/project/src/dist/index.js:819:7)
+    at async file:///opt/render/project/src/dist/index.js:1016:24 {
+  severity: undefined,
+  code: undefined,
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: undefined,
+  line: undefined,
+  routine: undefined,
+  sourceError: TypeError: fetch failed
+      at node:internal/deps/undici/undici:13510:13
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async execute (file:///opt/render/project/src/node_modules/@neondatabase/serverless/index.mjs:1548:15)
+      at async NeonHttpPreparedQuery.execute (file:///opt/render/project/src/node_modules/drizzle-orm/neon-http/session.js:40:20)
+      at async PostgresStorage.ensureInitialized (file:///opt/render/project/src/dist/index.js:613:34)
+      at async PostgresStorage.getSettings (file:///opt/render/project/src/dist/index.js:768:5)
+      at async StorageManager.getStorage (file:///opt/render/project/src/dist/index.js:819:7)
+      at async file:///opt/render/project/src/dist/index.js:1016:24 {
+    [cause]: Error: connect ECONNREFUSED 10.221.16.5:443
+        at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1636:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '10.221.16.5',
+      port: 443
+    }
+  }
+}
+postgres storage connection failed, falling back: NeonDbError: Error connecting to database: fetch failed
+    at execute (file:///opt/render/project/src/node_modules/@neondatabase/serverless/index.mjs:1549:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async NeonHttpPreparedQuery.execute (file:///opt/render/project/src/node_modules/drizzle-orm/neon-http/session.js:40:20)
+    at async PostgresStorage.ensureInitialized (file:///opt/render/project/src/dist/index.js:613:34)
+    at async PostgresStorage.getSettings (file:///opt/render/project/src/dist/index.js:768:5)
+    at async StorageManager.getStorage (file:///opt/render/project/src/dist/index.js:819:7)
+    at async file:///opt/render/project/src/dist/index.js:1016:24 {
+  severity: undefined,
+  code: undefined,
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: undefined,
+  line: undefined,
+  routine: undefined,
+  sourceError: TypeError: fetch failed
+      at node:internal/deps/undici/undici:13510:13
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async execute (file:///opt/render/project/src/node_modules/@neondatabase/serverless/index.mjs:1548:15)
+      at async NeonHttpPreparedQuery.execute (file:///opt/render/project/src/node_modules/drizzle-orm/neon-http/session.js:40:20)
+      at async PostgresStorage.ensureInitialized (file:///opt/render/project/src/dist/index.js:613:34)
+      at async PostgresStorage.getSettings (file:///opt/render/project/src/dist/index.js:768:5)
+      at async StorageManager.getStorage (file:///opt/render/project/src/dist/index.js:819:7)
+      at async file:///opt/render/project/src/dist/index.js:1016:24 {
+    [cause]: Error: connect ECONNREFUSED 10.221.16.5:443
+        at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1636:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '10.221.16.5',
+      port: 443
+    }
+  }
+}
+Using in-memory storage as final fallback
+5:32:32 PM [express] GET /api/status 200 in 398ms :: {"status":"healthy","timestamp":"2025-07-19T17:…
+5:32:32 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+     ==> Your service is live 🎉
+     ==> 
+     ==> ///////////////////////////////////////////////////////////
+     ==> 
+     ==> Available at your primary URL https://room-management-app.onrender.com
+     ==> 
+     ==> ///////////////////////////////////////////////////////////
+5:32:34 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+5:32:37 PM [express] GET /api/status 200 in 2ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+5:32:39 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+5:32:42 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+5:32:42 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+5:32:44 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+5:32:47 PM [express] GET /api/status 200 in 2ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+5:32:49 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+5:32:52 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+5:32:54 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+5:32:57 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+5:32:59 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:32…
+5:33:02 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:33:04 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:33:07 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:33:09 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:33:12 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:33:12 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:33:14 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:33:17 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:33:19 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:33:22 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:33:24 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:33:27 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:33:29 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:33:32 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:33:36 PM [express] GET /api/rooms 200 in 2ms :: [{"id":1,"roomNumber":"Room 01","tenantName":"Raj …
+5:33:37 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:33:39 PM [express] GET /api/settings 200 in 1ms :: {"id":1,"baseRent":3000,"unitRate":10}
+5:33:42 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:33:42 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:33:47 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:33:48 PM [express] POST /api/data/reset-all 200 in 0ms :: {"message":"All data reset successfully"}
+5:33:50 PM [express] GET /api/rooms 304 in 0ms :: [{"id":1,"roomNumber":"Room 01","tenantName":"Raj …
+5:33:52 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:33:57 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:33…
+5:34:02 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:34…
+5:34:07 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:34…
+5:34:12 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:34…
+5:34:12 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:34…
+5:34:17 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:34…
+5:34:22 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:34…
+5:34:27 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:34…
+5:34:32 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:34…
+5:34:37 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:34…
+5:34:42 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:34…
+5:34:42 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:34…
+5:34:47 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:34…
+5:34:52 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:34…
+5:34:57 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:34…
+5:35:02 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:35…
+5:35:07 PM [express] GET /api/status 200 in 1ms :: {"status":"healthy","timestamp":"2025-07-19T17:35…
+5:35:12 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:35…
+5:35:12 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:35…
+5:35:17 PM [express] GET /api/status 200 in 0ms :: {"status":"healthy","timestamp":"2025-07-19T17:35…
