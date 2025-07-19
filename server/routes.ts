@@ -178,6 +178,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Health check endpoint for Render
+  app.get("/api/status", async (req, res) => {
+    try {
+      const storage = await storageManager.getStorage();
+      // Test database connectivity by trying to get settings
+      await storage.getSettings();
+      res.json({ 
+        status: "healthy", 
+        timestamp: new Date().toISOString(),
+        database: "connected"
+      });
+    } catch (error) {
+      res.status(503).json({ 
+        status: "unhealthy", 
+        timestamp: new Date().toISOString(),
+        database: "disconnected",
+        error: error instanceof Error ? error.message : String(error)
+      });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
